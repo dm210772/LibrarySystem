@@ -1,6 +1,5 @@
-package com.company;
+package com.company.libraryFunctions;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,11 +7,11 @@ import java.util.Scanner;
 
 public class loginSystem {
 
-    static File accounts = new File("accounts.txt");
+
 
     public static void registerLogIn(String username, String account) {
         try {
-            FileWriter myWriter = new FileWriter(accounts.getName(), true);
+            FileWriter myWriter = new FileWriter(repository.accounts.getName(), true);
             myWriter.write(username + "," + account + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
@@ -30,13 +29,14 @@ public class loginSystem {
 
     public static void verifyLogIn(String username, String password) {
         try {
-            Scanner myReader = new Scanner(accounts);
+            Scanner myReader = new Scanner(repository.accounts);
             while (myReader.hasNextLine()) {
                 String[] data = myReader.nextLine().split(",");
                 if (data[0].equals(username)) {
                     if (data[1].equals(password)) {
                         System.out.println("Password correct. Logging in...");
                         System.out.println("Log in complete.");
+                        repository.logInComplete = true;
                         break;
                     } else {
                         System.out.println("Password incorrect.");
@@ -51,7 +51,7 @@ public class loginSystem {
         }
     }
 
-    public static void main(String[] args) {
+    public static void menu() {
         // write your code here
 
         String choice = getInput("Would you like to log in or register an account?");
